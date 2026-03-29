@@ -1,10 +1,11 @@
 [project]
-name = "kaggle_hdd_idea"
+name = "kaggle_sdrf_idea"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "kaggle_sdrfmess",
     "langchain>=1.2.13",
     "langchain-core>=1.2.22",
     "langchain-openai>=1.1.12",
@@ -13,3 +14,6 @@ dependencies = [
     "scikit-learn>=1.8.0",
     "sdrf-pipelines[all]>=0.1.2",
 ]
+
+[tool.uv.sources]
+kaggle_sdrfmess = { git = "https://github.com/vedina/modelmess.git", subdirectory = "sdrf_pipeline", rev = "iterative" }
