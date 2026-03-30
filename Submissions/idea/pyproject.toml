@@ -16,4 +16,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-kaggle_sdrfmess = { git = "https://github.com/vedina/modelmess.git", subdirectory = "sdrf_pipeline", rev = "iterative" }
+kaggle_sdrfmess = { git = "https://github.com/vedina/modelmess.git",  rev = "main" }
