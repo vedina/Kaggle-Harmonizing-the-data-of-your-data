@@ -69,6 +69,13 @@ pip install uv
 ```
 cd idea
 uv sync
+uv pip show kaggle_sdrfmess
+uv run python -m sdrf_pipeline.main_fill
+usage: main_fill.py [-h] [--pattern GLOB] [--stage {rules,llm,both}] [--rules-only] [--rules-dir RULES_DIR] [--llm-dir LLM_DIR] [--fill-from DIR]
+                    [--api-key API_KEY] [--base-url BASE_URL] [--model MODEL] [--max-tokens MAX_TOKENS] [--context-limit TOKENS] [--no-dedup]
+                    [--prompts TOML] [--dump-prompts TOML] [--verbose]
+                    [input]
+
 ```
 
 ---
@@ -96,15 +103,7 @@ python main_fill.py papers/ --api-key $OPENAI_API_KEY
 python main_fill.py PXD004010_PubText.json --stage rules --rules-dir output/rules
 ```
 
-### 4. Use as a Python library
 
-TBD update
-
-```python
-
-```
-
----
 
 ## CLI Options
 
@@ -170,30 +169,8 @@ Single-file mode (batch inferred from directory input)
   python main_fill.py PXD004010_PubText.json --stage both
 ---
 
-## Project Structure
+## Postprocessing
 
 ```
-sdrf_pipeline/
-├── main.py              # CLI entrypoint
-├── requirements.txt
-├── src/
-│   ├── models.py        # Pydantic SDRFRow + SDRFDocument models
-│   └── pipeline.py      # LangChain extraction chain + CSV writer
-├── examples/
-│   └── paper.txt        # Example input
-└── output/              # Default output directory
-```
-
----
-
-## Output format
-
-The output CSV matches the SDRF specification with all required columns.
-Fields not extractable from the paper text are filled with `"not applicable"`.
-One row is written per raw MS data file found in the paper.
-
-```
-D,PXD,Raw Data File,Characteristics[Age],...,Usage
-S,PXD016436,file1.raw,not applicable,...,raw
-S,PXD016436,file2.raw,not applicable,...,raw
+uv run main_postptocessing output.tsv
 ```

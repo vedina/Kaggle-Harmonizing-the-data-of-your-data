@@ -17,3 +17,6 @@ dependencies = [
 
 [tool.uv.sources]
 kaggle_sdrfmess = { git = "https://github.com/vedina/modelmess.git", rev = "eeff7cea4a28cedff0b05fec4fa5e1fefd9c59d4" }
+
+[project.scripts]
+sdrf-post = "main_postprocess:main"
