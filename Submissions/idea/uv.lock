@@ -396,7 +396,7 @@ requires-dist = [
 [[package]]
 name = "kaggle-sdrfmess"
 version = "0.1.0"
-source = { git = "https://github.com/vedina/modelmess.git?rev=submission#3bfc6c3d9d4d0e1162f18d9cba3c622cb8c3ef6a" }
+source = { git = "https://github.com/vedina/modelmess.git?rev=submission#cdd786344536a4c107262e02563328b19d953b73" }
 dependencies = [
     { name = "langchain" },
     { name = "langchain-core" },

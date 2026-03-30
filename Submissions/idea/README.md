@@ -70,7 +70,7 @@ pip install uv
 cd idea
 uv sync
 uv pip show kaggle_sdrfmess
-uv run python -m sdrf_pipeline.main_fill
+uv run -m main_fill
 usage: main_fill.py [-h] [--pattern GLOB] [--stage {rules,llm,both}] [--rules-only] [--rules-dir RULES_DIR] [--llm-dir LLM_DIR] [--fill-from DIR]
                     [--api-key API_KEY] [--base-url BASE_URL] [--model MODEL] [--max-tokens MAX_TOKENS] [--context-limit TOKENS] [--no-dedup]
                     [--prompts TOML] [--dump-prompts TOML] [--verbose]
