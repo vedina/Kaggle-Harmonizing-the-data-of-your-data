@@ -383,7 +383,7 @@ dependencies = [
 
 [package.metadata]
 requires-dist = [
-    { name = "kaggle-sdrfmess", git = "https://github.com/vedina/modelmess.git?rev=main" },
+    { name = "kaggle-sdrfmess", git = "https://github.com/vedina/modelmess.git?rev=eeff7cea4a28cedff0b05fec4fa5e1fefd9c59d4" },
     { name = "langchain", specifier = ">=1.2.13" },
     { name = "langchain-core", specifier = ">=1.2.22" },
     { name = "langchain-openai", specifier = ">=1.1.12" },
@@ -396,7 +396,7 @@ requires-dist = [
 [[package]]
 name = "kaggle-sdrfmess"
 version = "0.1.0"
-source = { git = "https://github.com/vedina/modelmess.git?rev=main#1cb04c5745b3f55e314f66f522c7d3ec75011e0c" }
+source = { git = "https://github.com/vedina/modelmess.git?rev=eeff7cea4a28cedff0b05fec4fa5e1fefd9c59d4#eeff7cea4a28cedff0b05fec4fa5e1fefd9c59d4" }
 dependencies = [
     { name = "langchain" },
     { name = "langchain-core" },
