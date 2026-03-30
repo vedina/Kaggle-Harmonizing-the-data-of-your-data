@@ -1,176 +1,129 @@
-# SDRF Extraction Pipeline
+# SDRF Extraction Pipeline — Submission
 
-The pipeline converts scientific proteomics publications into **SDRF (Sample and Data Relationship Format)** metadata files, which describe the experimental samples, instruments, and conditions behind mass spectrometry datasets in a standardised, machine-readable way. It works in two stages: first, a fast rule-based pass reads the structured paper JSON (title, abstract, and methods section) and uses regex patterns and keyword lookups to deterministically fill fields it can extract with high confidence — organism, tissue, labelling strategy, instrument model, cleavage agent, modifications, and others — writing one row per raw data file (with one row per TMT/iTRAQ channel when multiplexed). Second, an LLM gap-fill pass takes the partially completed SDRF, identifies only the fields still marked "not applicable", and sends those fields together with the relevant paper text to a configurable language model, which returns a targeted patch without touching values the rules already set. The two stages write to separate output folders so rule output is never overwritten, and the LLM stage can be re-run independently against the same rule baseline using different models or prompts — making the pipeline both deterministic at its core and iteratively improvable at the edges.
-
----
-
-## Architecture
-
-```
-paper_text (.txt)
-      │
-      ▼
-┌─────────────────────────────────────────┐
-│  LangChain ChatPromptTemplate           │
-│  (system + human extraction prompts)    │
-└────────────────────┬────────────────────┘
-                     │
-                     ▼
-         ┌───────────────────────┐
-         │  ChatOpenAI           │  ← any OpenAI-compatible API
-         │  (configurable model, │    (OpenAI, Ollama, vLLM,
-         │   base_url, api_key)  │     Azure, OpenRouter …)
-         └───────────┬───────────┘
-                     │  JSON response
-                     ▼
-         ┌───────────────────────┐
-         │  JsonOutputParser     │
-         │  + Pydantic           │  ← typed validation / defaults
-         │  SDRFDocument model   │
-         └───────────┬───────────┘
-                     │
-                     ▼
-            SDRF CSV output
-```
-
-**Why LangChain?**
-- `ChatOpenAI` supports `base_url` out of the box → works with Ollama, vLLM,
-  Azure OpenAI, OpenRouter, Together AI, and any other OpenAI-compatible server
-  without any code changes. 
-- `ChatPromptTemplate` cleanly separates prompt logic from pipeline code.
-- `JsonOutputParser` + Pydantic gives structured, validated output with
-  meaningful defaults (`"not applicable"`) so the CSV is always well-formed.
+**Competition:** [Harmonizing the Data of Your Data](https://www.kaggle.com/competitions/harmonizing-the-data-of-your-data)  
+**Task:** Extract structured SDRF metadata from proteomics paper text for 15 datasets.  
+**Metric:** Macro-averaged F1 over agglomerative-clustered values per (PXD, column) pair.
 
 ---
 
-## Installation
+## Method
 
+A two-stage hybrid pipeline combining deterministic rule extraction with
+LLM gap-fill, followed by ontology normalisation.
 
-### 1. Install `uv`
+### Stage 1 — Rule-based extraction
 
-**macOS & Linux**
+A regex and keyword pass over the paper's title, abstract, and methods section
+deterministically fills fields that can be resolved without ambiguity:
+organism, tissue, isobaric label type and channel count (TMT/iTRAQ/SILAC),
+instrument model, cleavage agent, fragmentation and acquisition method, LC
+parameters, search tolerances, and sample preparation reagents. One row is
+produced per raw data file; TMT/iTRAQ experiments produce one row per channel.
+Rule output is written to a separate folder and never modified by later stages.
+
+### Stage 2 — LLM gap-fill
+
+Only fields still `Not Applicable` after the rule pass are sent to the LLM.
+The fill uses a two-turn conversation per unique N/A pattern (deduplicated
+across rows): pass 1 produces a free-text inventory from the paper; pass 2
+converts it into a JSON patch restricted to exactly the N/A attribute set.
+Rule-derived values cannot be overwritten. Paper text is trimmed to a
+configurable context budget with a 5% safety margin.
+
+Models used: `gpt-4o`, `gpt-4o-mini`, `claude-sonnet`.
+
+### Post-processing
+
+- **Column alignment**: per-PXD CSVs are concatenated and columns are aligned
+  to the sample submission schema.
+- **Ontology normalisation** (`make_submission.py`): plain-text values are
+  mapped to controlled vocabulary terms via the sdrf-pipelines OLS lookup
+  (e.g. `Trypsin` → `AC=MS:1001251;NT=Trypsin`).
+- **Multi-model ensemble** (`comparison.py`): outputs from different models
+  are merged using per-column consensus strategies — majority vote for
+  categorical fields, union with deduplication for factor values, highest
+  value for numeric fields (replicates, tolerances).
+
+---
+
+## Results
+
+| Configuration | Kaggle F1 |
+|---|---|
+| Public notebook baseline | 0.270 |
+| Rules only | ~0.22 |
+| Rules + `gpt-4o-mini` | 0.260 |
+| Rules + `gpt-4o` | ~0.26 |
+
+Scores reflect the public leaderboard (approximately half of test columns).
+The full evaluation includes all SDRF columns; ontology normalisation is
+expected to improve scores on `Characteristics[CleavageAgent]`,
+`Characteristics[Label]`, `Characteristics[Modification]`, and
+`Comment[Instrument]`.
+
+---
+
+## Files
+
+| File | Description |
+|---|---|
+| `make_submission.py` | Combines per-PXD CSVs, aligns columns, applies OLS normalisation |
+| `comparison.py` | Merges and reconciles outputs from multiple models |
+| `compare_scores.py` | Local F1 scorer against training ground truth or another submission |
+| `requirements.txt` | Dependencies (includes `kaggle_sdrfmess` as git dependency) |
+| `submission.csv` | Final submission |
+
+The extraction pipeline itself lives in
+[`kaggle_sdrfmess`](https://github.com/vedina/modelmess/tree/main/sdrf_pipeline)
+and is declared as a git dependency.
+
+---
+
+## Installation & Usage
+
 ```bash
-curl -LsSf https://astral.sh/uv/install.sh | sh
+pip install -r requirements.txt
 ```
 
-**Windows**
-```
-powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
-```
-
-or 
-
-```
-pip install uv
-```
-
-### 2. Install Dependencies from pyproject.toml
-
-```
-cd idea
-uv sync
-uv pip show kaggle_sdrfmess
-uv run -m main_fill
-usage: main_fill.py [-h] [--pattern GLOB] [--stage {rules,llm,both}] [--rules-only] [--rules-dir RULES_DIR] [--llm-dir LLM_DIR] [--fill-from DIR]
-                    [--api-key API_KEY] [--base-url BASE_URL] [--model MODEL] [--max-tokens MAX_TOKENS] [--context-limit TOKENS] [--no-dedup]
-                    [--prompts TOML] [--dump-prompts TOML] [--verbose]
-                    [input]
-
-```
-
----
-
-## Usage
-
-```
-# One-time bootstrap (fast, no API cost)
-python main_fill.py papers/ --stage rules --rules-dir output/rules
-
-# Fill with gpt-4o
-python main_fill.py papers/ --stage llm \
-    --fill-from output/rules --llm-dir output/llm_gpt4o \
+```bash
+# 1. Extract SDRF per paper (run from the pipeline repo)
+python -m main_fill data/TestPubText/ --stage rules --rules-dir output/rules
+python -m main_fill data/TestPubText/ --stage llm \
+    --fill-from output/rules --llm-dir output/llm \
     --model gpt-4o --api-key $OPENAI_API_KEY
 
-# Fill same rules with a different model — rules unchanged
-python main_fill.py papers/ --stage llm \
-    --fill-from output/rules --llm-dir output/llm_llama \
-    --model llama3.1:70b --base-url http://localhost:11434/v1 --api-key ollama
+# 2. Build submission
+python make_submission.py output/llm \
+    --sample-submission data/SampleSubmission.csv \
+    -o submission.csv
 
-# Default (both stages, legacy behaviour)
-python main_fill.py papers/ --api-key $OPENAI_API_KEY
+# 3. (Optional) merge two model outputs
+python comparison.py \
+    --inputs output/llm_gpt4o/final.csv output/llm_claude/final.csv \
+    --names gpt4o claude \
+    --out_sdrf final_merged.sdrf.csv
 
-# Single file
-python main_fill.py PXD004010_PubText.json --stage rules --rules-dir output/rules
+# 4. Local scoring (compare two submissions)
+python compare_scores.py \
+    --ours submission.csv \
+    --compare other_submission.csv
 ```
 
-
-
-## CLI Options
-
-```
-usage: main_fill.py [-h] [--stage {rules,llm,both}] [--rules-only] [--rules-dir RULES_DIR] [--llm-dir LLM_DIR] [--fill-from DIR] [--api-key API_KEY]
-                    [--base-url BASE_URL] [--model MODEL] [--max-tokens MAX_TOKENS] [--no-dedup] [--verbose]
-                    input
-
-SDRF extraction — rules + LLM gap-fill pipeline.
-
-positional arguments:
-  input                 Path to a single paper JSON or a directory of paper JSONs.
-
-options:
-  -h, --help            show this help message and exit
-  --stage {rules,llm,both}
-                        Which stage(s) to run (default: both).
-  --rules-only          Alias for --stage rules.
-  --rules-dir RULES_DIR
-                        Folder for rule-based CSVs (default: output/rules).
-  --llm-dir LLM_DIR     Folder for LLM-filled CSVs (default: output/llm).
-  --fill-from DIR       For --stage llm: folder of pre-computed rule CSVs to use as input. If a file is missing, rules are re-run automatically. Defaults to   
-                        --rules-dir.
-  --api-key API_KEY     LLM API key (default: OPENAI_API_KEY env).
-  --base-url BASE_URL   OpenAI-compatible base URL.
-  --model MODEL         Model name (default: gpt-4o-mini).
-  --max-tokens MAX_TOKENS
-                        Max LLM response tokens (default: 8192).
-  --no-dedup            Disable row deduplication (one LLM call/row).
-  --verbose, -v
-
-SDRF Extraction — two-stage pipeline
-=====================================
-
-Three stages, selectable via --stage:
-
-  rules  — rule-based extraction only; writes CSVs to --rules-dir
-  llm    — LLM gap-fill only; reads from --fill-from (or --rules-dir),
-           writes to --llm-dir.  Requires paper JSONs for context.
-  both   — runs rules then llm in sequence (default)
-
-Typical iterative workflow
---------------------------
-  # 1. Bootstrap rule output once (fast, free)
-  python main_fill.py papers/ --stage rules --rules-dir output/rules
-
-  # 2. Fill gaps with model A
-  python main_fill.py papers/ --stage llm \
-      --fill-from output/rules --llm-dir output/llm_gpt4o \
-      --model gpt-4o --api-key $OPENAI_API_KEY
-
-  # 3. Fill gaps with model B (same rules, different output folder)
-  python main_fill.py papers/ --stage llm \
-      --fill-from output/rules --llm-dir output/llm_llama \
-      --model llama3.1:70b --base-url http://localhost:11434/v1 --api-key ollama
-
-  # 4. Re-fill a subset (pass a folder of specific rule CSVs)
-  python main_fill.py papers/ --stage llm \
-      --fill-from output/rules_subset --llm-dir output/llm_retry
-
-Single-file mode (batch inferred from directory input)
-------------------------------------------------------
-  python main_fill.py PXD004010_PubText.json --stage both
 ---
 
-## Postprocessing
+## References
 
-```
-uv run main_postptocessing output.tsv
-```
+- Deutsch EW et al. *A proteomics sample metadata representation for multiomics
+  integration and big data analysis.* Nature Communications, 2020.
+- [SDRF-Proteomics specification](https://github.com/bigbio/proteomics-sample-metadata)
+- [sdrf-pipelines](https://github.com/bigbio/sdrf-pipelines) — OLS ontology normalisation
+- [Competition metric](https://www.kaggle.com/code/iansitarik/sdrf-f1) — agglomerative clustering F1
+
+---
+
+## Checklist
+
+- [x] Code runs without errors
+- [x] Dependencies listed in `requirements.txt`
+- [x] README documents the approach
+- [x] Submission file is properly formatted
