@@ -1,0 +1,82 @@
+SDRF Field,gpt5.4 %,gpt5.4 Top 3,gemma3-27b %,gemma3-27b Top 3,o4-mini %,o4-mini Top 3,Used Default?,Conflict Count
+ID,100.0%,"[np.int64(1), np.int64(2), np.int64(3)]",100.0%,"[np.int64(1), np.int64(2), np.int64(3)]",100.0%,"[np.int64(1), np.int64(2), np.int64(3)]",No,0
+PXD,100.0%,"['PXD004010', 'PXD050621', 'PXD062014']",100.0%,"['PXD004010', 'PXD050621', 'PXD062014']",100.0%,"['PXD004010', 'PXD050621', 'PXD062014']",No,0
+Raw Data File,100.0%,"['ad_pl03.raw', 'ad_pl04.raw', 'ad_pl10.raw']",100.0%,"['ad_pl03.raw', 'ad_pl04.raw', 'ad_pl10.raw']",100.0%,"['ad_pl03.raw', 'ad_pl04.raw', 'ad_pl10.raw']",No,0
+Characteristics[Age],5.1%,"['6-12 months;2-6 months', 'adult', '8 weeks']",6.9%,"['12-16 months;7-12 months;5-8 months;3-4 months', '8 weeks', '6-8 weeks']",7.4%,"['6–12 months;2–6 months', '4 to 6 weeks', '8 weeks old']",No,114
+Characteristics[AlkylationReagent],91.5%,"['IAA', 'CAA']",92.8%,"['IAA', 'CAA']",91.4%,"['IAA', 'CAA']",No,0
+Characteristics[AnatomicSiteTumor],0.8%,['brain'],1.9%,['prostate'],0.4%,['flank'],No,0
+Characteristics[AncestryCategory],0.0%,[],3.3%,"['European;East Asian', 'Sprague-Dawley']",0.0%,[],No,0
+Characteristics[BMI],0.0%,[],2.9%,['22.5;obese'],0.0%,[],No,0
+Characteristics[Bait],83.1%,"['GPAT4 antibody', 'GFP;nsp3.1;Omicron 21K nsp3.1 variant;Omicron 21L nsp3.1 variant;Lambda 21G nsp3.1 variant']",82.9%,['nsp3.1;nsp3.2'],82.9%,['nsp3.1; nsp3.2; GFP'],No,1376
+Characteristics[BiologicalReplicate],100.0%,"[np.int64(3), np.int64(4), np.int64(10)]",100.0%,"[np.int64(3), np.int64(4), np.int64(10)]",100.0%,"[np.int64(3), np.int64(4), np.int64(10)]",No,0
+Characteristics[CellLine],95.0%,"['anbl6', 'hek293t', 'huvec']",97.2%,"['anbl6', 'hek293t', 'huvecs']",98.0%,"['anbl6', 'hek293t', 'huvec']",No,2
+Characteristics[CellPart],87.3%,"['cytosol; ER', 'gray matter', 'plasma membrane']",85.8%,"['mitochondrion; nucleus; cytosol', 'cytosol; ER']",89.5%,"['mitochondrion; cellular fraction', 'cytosol; ER', 'plasma membrane']",No,48
+Characteristics[CellType],91.9%,"['bacterial cell', 'Expi293F cells', 'bone marrow-derived macrophage']",95.5%,"['endothelial cells', 'L929', 'HeLa; A549; H460; naive human pluripotent stem cells; trophectoderm-like cells']",93.7%,"['ANBL6 multiple myeloma cell line', 'bone marrow-derived macrophage; peritoneal macrophage', 'A549 cell line; H460 cell line; HeLa cell line; naive human pluripotent stem cells; TE-like cells']",No,174
+Characteristics[CleavageAgent],100.0%,"['AC=MS:1001251;NT=Trypsin', 'AC=MS:1001251; AC=MS:1001251;NT=Trypsin', 'pepsin']",100.0%,"['AC=MS:1001251;NT=Trypsin', 'AC=MS:1001251; AC=MS:1001251;NT=Trypsin', 'AC=MS:1001251;NT=Trypsin|AC=MS:1001309;NT=Lys-C']",100.0%,"['AC=MS:1001251;NT=Trypsin', 'AC=MS:1001251; AC=MS:1001251;NT=Trypsin', 'Pepsin']",No,24
+Characteristics[Compound],5.9%,"['HSL-IN-1', 'PD0325901;XAV-939;Gö 6983;human leukemia inhibitory factor;Y-27632', 'GW4869']",12.4%,"['LPS;polyethyleneimine;ATP;Nigericin;Ac-YVAD-cmk;Q-VD-OPh;MCC950;anti-IFNAR antibody;anti-IL-1R;anti-IgG control;PAO1;E. coli', 'PD0325901;XAV-939;Gö 6983;human leukemia inhibitory factor;A83-01;XMU-MP-1;Y-27632', 'GW4869']",9.2%,"['HSL-IN-1', 'GW4869', 'TGF-β']",No,102
+Characteristics[ConcentrationOfCompound],5.9%,"['100 μM', '1 µM;2 µM;10 ng ml–1;10 µM', '10 µM']",12.4%,"['20 ng/mL;10 μM;20 μg/mL;2 μg/mL;5 μM;40 μM;0.5 mg/kg;3%', '1 µM;1 µM;2 µM;10 ng/ml;1 µM;2 µM;10 µM', '10 µM']",9.2%,"['100\u2009μΜ', '10 µM', '10ng/ml']",No,126
+Characteristics[Depletion],0.0%,[],2.9%,['MARS14 depletion;IgG depletion;albumin depletion'],1.1%,['Casein and denatured proteins were removed from the skim milk samples by acidification and ultracentrifugation according to a previous paper.'],No,0
+Characteristics[DevelopmentalStage],3.9%,"['exponential phase', 'embryonic', 'adult']",6.9%,"['adult;neonatal;embryonic', 'adult', 'embryonic; neonatal; adult']",0.4%,['adult'],No,0
+Characteristics[DiseaseTreatment],0.0%,[],2.9%,['chemotherapy;untreated'],0.0%,[],No,0
+Characteristics[Disease],100.0%,"['multiple myeloma', 'normal', 'cancer']",100.0%,"['multiple myeloma', 'normal', 'cancer']",100.0%,"['multiple myeloma', 'normal', 'cancer']",No,0
+Characteristics[GeneticModification],0.8%,"['MEOX2 knockout;SRGN knockout;shMEOX2 knockdown;shSRGN knockdown;NOTCH1 knockdown', 'PRNP Q160Ter;PRNP F198S']",6.9%,"['PolgD257A/D257A;PolgR292C/R292C;Ifnar1−/−', 'NQO1-FLAG;Cas9 nuclease;NQO1 siRNA knockdown', 'BRCA1 knockout; TP53 siRNA knockdown; Tmem9 knockout; Tmem9b knockout; Clcn3 knockout; Clcn4 knockout; Clcn5 knockout']",3.6%,"['PolgD257A/D257A;PolgR292C/R292C', 'P301S mutation']",No,60
+Characteristics[Genotype],3.4%,"['wild-type', 'wild-type;PolgD257A/D257A;PolgR292C/R292C']",7.2%,"['wild-type;p53-/-;APP/PS1', 'Sprague-Dawley', 'wild-type']",0.0%,[],No,48
+Characteristics[GrowthRate],3.6%,['exponential phase'],5.1%,"['exponential phase;24 h doubling time', 'exponential phase']",0.0%,[],No,0
+Characteristics[Label],100.0%,"['AC=MS:1002038;NT=label free sample', 'AC=PRIDE:0000543;NT=TMT16plex']",100.0%,"['AC=MS:1002038;NT=label free sample', 'AC=PRIDE:0000543;NT=TMT16plex']",100.0%,"['AC=MS:1002038;NT=label free sample', 'AC=PRIDE:0000543;NT=TMT16plex']",No,0
+Characteristics[MaterialType],100.0%,"['cell culture', 'milk whey']",100.0%,"['cell culture', 'tissue']",100.0%,"['cell culture', 'Bovine raw tank milk']",No,18
+Characteristics[Modification],99.5%,"['TMT6plex', 'Phospho', 'Oxidation']",99.5%,"['TMT6plex', 'Phospho', 'Oxidation']",99.5%,"['TMT6plex', 'Phospho', 'Oxidation']",No,0
+Characteristics[Modification].1,95.7%,"['Oxidation', 'Carbamidomethyl', 'all PTMs and mutations']",93.8%,"['Oxidation', 'Carbamidomethyl']",89.5%,"['Oxidation (M)', 'Oxidation', 'Carbamidomethyl']",No,82
+Characteristics[Modification].2,93.1%,"['TMT6plex (N-term)', 'Acetyl', 'Oxidation (M)']",93.2%,"['Acetyl', 'Acetyl (N-term); Deamidation', 'Deamidation']",89.5%,"['TMT label (+229.1629 Da)', 'Acetyl', 'Oxidation (M)']",No,118
+Characteristics[Modification].3,86.6%,"['TMT6plex (K)', 'Deamidation (NQ)', 'Gln->pyro-Glu (N-term Q)']",92.5%,"['Oxidation of methionine', 'Deamidation (NQ)', 'Deamidated (NQ)']",88.5%,"['N-terminal acetylation', 'Carbamidomethyl (C)', 'Gln->pyro-Glu (N-term Q)']",No,68
+Characteristics[Modification].4,82.9%,['Met oxidation (+15.995 Da)'],4.7%,"['N-terminal acetylation', 'Deamidation']",84.0%,"['de-amidation of asparagine or glutamine', 'TMTpro (+304.207 Da) at Lys and N-termini']",No,1394
+Characteristics[Modification].5,82.9%,['protein N-terminal Met loss (−131.040 Da)'],1.1%,['De-amidation of asparagine or glutamine'],82.9%,['Cys carbamidomethylation (+57.021 Da)'],No,1376
+Characteristics[Modification].6,82.9%,['protein N-terminal acetylation (+42.011 Da)'],0.0%,[],0.0%,[],No,0
+Characteristics[NumberOfBiologicalReplicates],15.3%,"['3', '2']",94.6%,"['3', '2;3']",95.8%,"['3', 'in triplicate', '11; 13; 8; 7; 12']",No,1502
+Characteristics[NumberOfSamples],100.0%,"[np.int64(10), np.int64(9), np.int64(24)]",100.0%,"[np.int64(10), np.int64(9), np.int64(24)]",100.0%,"[np.int64(10), np.int64(9), np.int64(24)]",No,0
+Characteristics[NumberOfTechnicalReplicates],100.0%,"[np.int64(1), np.int64(2)]",100.0%,"[np.int64(1), np.int64(2)]",100.0%,"[np.int64(1), np.int64(2)]",No,0
+Characteristics[OrganismPart],100.0%,"['brain', 'cell lysate', 'serum']",99.5%,"['brain', 'serum', 'heart']",99.5%,"['brain', 'serum', 'heart']",No,0
+Characteristics[Organism],100.0%,"['Homo sapiens', 'Escherichia coli', 'Mus musculus']",100.0%,"['Homo sapiens', 'Escherichia coli', 'Mus musculus']",100.0%,"['Homo sapiens', 'Escherichia coli', 'Mus musculus']",No,0
+Characteristics[OriginSiteDisease],0.0%,[],2.9%,['primary tumor;metastasis'],1.3%,"['brain', 'frontal cortex']",No,0
+Characteristics[PooledSample],11.2%,['no'],85.8%,"['yes;no', 'yes']",86.2%,['yes'],No,78
+Characteristics[ReductionReagent],96.6%,"['DTT', 'TCEP']",98.4%,"['DTT', 'DTT; TCEP', 'TCEP']",96.6%,"['DTT', 'TCEP']",No,0
+Characteristics[SamplingTime],0.0%,[],91.3%,"['0 h;24 h;day 7', '24 h', '36 hpi;48 hpi']",5.4%,"['36 hpi;48 hpi', '1.5\u2009h', '6–14 days']",No,66
+Characteristics[Sex],5.3%,"['mixed', 'male', 'female']",7.4%,"['mixed', 'male', 'female']",7.4%,"['mixed', 'male', 'female']",No,60
+Characteristics[Specimen],95.9%,"['postmortem tissue', 'cell lysate', 'cell pellet']",96.3%,"['postmortem tissue', 'milk', 'BMDMs;PerMacs;lung;tissue;cell pellet']",98.4%,"['postmortem tissue', 'cell lysates', 'skim milk samples']",No,1543
+Characteristics[SpikedCompound],1.9%,['iRT Standard'],8.8%,"['iRT peptides;UPS2', 'iRT Standard', 'iRT peptides']",1.9%,['iRT Standard'],No,0
+Characteristics[Staining],7.7%,"['Coomassie blue staining', 'Coomassie Blue', 'hematoxylin;Thioflavin S']",9.5%,"['Coomassie;silver stain', 'Coomassie Blue', 'Thioflavin S']",7.6%,"['Coomassie blue', 'DAPI', 'hematoxylin; Thioflavin S']",No,96
+Characteristics[Strain],3.9%,"['AB1157', 'C57BL/6', 'C57BL/6J']",9.6%,"['Escherichia coli; E. coli', 'C57BL/6J;C57BL/6NJ;B6(Cg)-Tyrc-2J/J', 'C57BL/6;BALB/c;BY4742']",9.3%,"['E. coli AB1157', 'C57BL/6J;PolgD257A/D257A;PolgR292C/R292C', 'BALB/c-Nude; NCG']",No,123
+Characteristics[SyntheticPeptide],2.0%,"['yes', 'no']",1.9%,['yes'],1.9%,['yes'],No,0
+Characteristics[Temperature],86.4%,"['37', '37;4', '65;70;75;80;85']",97.1%,"['37', '65;70;75;80;85', '37;65;80']",91.9%,['37'],No,0
+Characteristics[Time],86.2%,"['2 h', '30 min', '16 h;24 h']",96.6%,"['48 to 72 h', '30 min', '30 min;24 h;72 h']",87.8%,"['30 min', '16 h', '24 h']",No,1412
+Characteristics[Treatment],88.1%,"['HSL-IN-1 treatment', 'heat treatment', 'GW4869 treatment;DMSO;none']",8.1%,"['heat treatment', 'heat treatment;none;EGF stimulation', 'GW4869']",88.1%,"['heat treatment', 'DMSO; 10 µM GW4869; none', 'calcium phosphate transfection']",No,1444
+Characteristics[TumorCellularity],0.0%,[],3.3%,['70%'],0.0%,[],No,0
+Characteristics[TumorGrade],0.0%,[],2.9%,['Grade II;G3'],0.0%,[],No,0
+Characteristics[TumorSite],0.0%,[],2.9%,['right breast;sigmoid colon'],0.1%,['right frontal lobe'],No,0
+Characteristics[TumorSize],0.0%,[],3.3%,"['2.3 cm;T2', '0.1 mL;2.3 cm;T2']",0.1%,['1.2 cm'],No,0
+Characteristics[TumorStage],0.0%,[],3.3%,['Stage II;T2N1M0'],0.0%,[],No,0
+Comment[AcquisitionMethod],100.0%,"['DDA', 'DIA']",100.0%,"['DDA', 'DIA']",100.0%,"['DDA', 'IDA(MS) analysis', 'DIA']",No,26
+Comment[CollisionEnergy],93.4%,"['Low trap collision energy of 4 V and High ramp trap collision energy of 20–45 V', '25%', '32 NCE']",89.2%,"['20–45\xa0V', '25 NCE', '0.05 Da']",89.8%,"['Low trap collision energy of 4\u2009V and High ramp trap collision energy of 20–45\u2009V', '25%', '32 NCE']",No,90
+Comment[EnrichmentMethod],86.6%,"['anti-DYKDDDDK resin immunoprecipitation', 'affinity purification']",2.9%,['IMAC;TiO2;anti-phosphotyrosine'],86.2%,"['magnetic beads coated with TOMM20 antibodies', 'FLAG IP', 'Streptavidin-beads pulldown']",No,1424
+Comment[FlowRateChromatogram],94.8%,"['100 μL/min', '5 μL/min', '0.5 μL/min']",98.4%,"['100 μL/min', '5 μL/min', '0.5 μL/min']",94.8%,"['100 μL/min', '5 μL/min', '0.5 μL/min']",No,68
+Comment[FractionIdentifier],100.0%,[np.int64(1)],100.0%,[np.int64(1)],100.0%,[np.int64(1)],No,0
+Comment[FractionationMethod],92.3%,"['NT=SDS-PAGE;AC=PRIDE:0000568', 'NT=Strong cation-exchange chromatography (SCX);AC=PRIDE:0000561']",95.2%,"['NT=SDS-PAGE;AC=PRIDE:0000568', 'NT=Strong cation-exchange chromatography (SCX);AC=PRIDE:0000561; HpRP; NT=SDS-PAGE;AC=PRIDE:0000568', 'NT=Strong cation-exchange chromatography (SCX);AC=PRIDE:0000561']",92.3%,"['NT=SDS-PAGE;AC=PRIDE:0000568', 'NT=Strong cation-exchange chromatography (SCX);AC=PRIDE:0000561']",No,0
+Comment[FragmentMassTolerance],88.8%,"['0.5 Da', '10 ppm', '0.05 Da']",91.4%,"['±6 ppm', '0.5 Da', '0.5 Da;20 ppm;0.02 Da']",88.8%,"['0.5 Da', '10 ppm', '0.05 Da']",No,56
+Comment[FragmentationMethod],98.4%,"['MSE', 'NT=CID;AC=MS:1000133', 'NT=HCD;AC=MS:1000422']",96.6%,"['NT=HCD;AC=MS:1000422', 'NT=CID;AC=MS:1000133']",95.1%,"['MSE', 'NT=CID;AC=MS:1000133', 'NT=HCD;AC=MS:1000422']",No,24
+Comment[GradientTime],92.9%,"['6 min', '46 min', '50 min']",94.0%,"['6\xa0min', '46 min', '50 min']",91.5%,"['46 min', '50 min', '25 minutes']",No,114
+Comment[Instrument],98.5%,"['AC=MS:1002416;NT=Orbitrap Fusion', 'NT=AB SCIEX Zeno TOF 7600', 'AC=MS:1000449;NT=LTQ Orbitrap XL']",98.5%,"['AC=MS:1002416;NT=Orbitrap Fusion', 'NT=AB SCIEX Zeno TOF 7600', 'AC=MS:1000449;NT=LTQ Orbitrap XL']",98.5%,"['AC=MS:1002416;NT=Orbitrap Fusion', 'NT=AB SCIEX Zeno TOF 7600', 'AC=MS:1000449;NT=LTQ Orbitrap XL']",No,1376
+Comment[IonizationType],100.0%,['NT=electrospray ionization;AC=MS:1000073'],100.0%,['NT=electrospray ionization;AC=MS:1000073'],100.0%,['NT=electrospray ionization;AC=MS:1000073'],No,0
+Comment[MS2MassAnalyzer],97.0%,"['NT=time-of-flight;AC=MS:1000084', 'NT=orbitrap;AC=MS:1000484']",98.5%,"['Synapt XS', 'NT=time-of-flight;AC=MS:1000084', 'NT=orbitrap;AC=MS:1000484']",13.7%,"['NT=time-of-flight;AC=MS:1000084', 'NT=orbitrap;AC=MS:1000484']",No,0
+Comment[NumberOfFractions],100.0%,[np.int64(1)],100.0%,[np.int64(1)],100.0%,[np.int64(1)],No,0
+Comment[NumberOfMissedCleavages],87.4%,"['2', '1']",98.4%,"['2', '2;1;0', '1']",87.4%,"['two', '1', '2']",No,66
+Comment[PrecursorMassTolerance],90.9%,"['6 ppm', '10 ppm', '4.5 ppm']",97.0%,"['6 ppm', '10 ppm', '4.5 ppm']",90.9%,"['6 ppm', '10 ppm', '4.5 ppm']",No,0
+Comment[Separation],98.5%,['NT=Reversed-phase chromatography;AC=PRIDE:0000563'],98.5%,"['NT=Reversed-phase chromatography;AC=PRIDE:0000563', 'NT=Reversed-phase chromatography;AC=PRIDE:0000563; HILIC; NT=SCX;AC=PRIDE:0000561']",96.4%,['NT=Reversed-phase chromatography;AC=PRIDE:0000563'],No,30
+FactorValue[Bait],82.9%,['GFP;nsp3.1;Omicron 21K nsp3.1 variant;Omicron 21L nsp3.1 variant;Lambda 21G nsp3.1 variant'],82.9%,['nsp3.1;nsp3.2'],0.0%,[],No,1376
+FactorValue[CellPart],0.0%,[],82.9%,['cytosol;ER'],0.0%,[],No,0
+FactorValue[Compound],1.9%,['GW4869'],6.3%,"['GW4869', 'TGF-β', 'CBK77']",2.3%,"['GW4869', 'CBK77CLICK']",No,6
+FactorValue[ConcentrationOfCompound].1,1.9%,['10 µM'],6.3%,"['10 µM', '10ng/ml', '25 µM']",2.3%,"['10 µM', '20\u2009µM']",No,6
+FactorValue[Disease],0.4%,['osteoarthritis'],0.0%,[],0.0%,[],No,0
+FactorValue[FractionIdentifier],0.0%,[],0.0%,[],0.0%,[],No,0
+FactorValue[GeneticModification],0.8%,"['MEOX2 knockout;SRGN knockout', 'PRNP Q160Ter;PRNP F198S']",3.6%,['BRCA1 knockout; TP53 siRNA knockdown; Tmem9 knockout; Tmem9b knockout; Clcn3 knockout; Clcn4 knockout; Clcn5 knockout'],0.0%,[],No,0
+FactorValue[Temperature],1.1%,['65;70;75;80;85'],1.1%,['65;70;75;80;85'],1.1%,['65;70;75;80;85'],No,0
+FactorValue[Treatment],0.4%,['low-intensity pulsed ultrasound'],2.7%,"['GW4869', 'LIPUS', 'CBK77']",0.4%,['Control;TGF-β;LIPUS'],No,6
+Usage,100.0%,"['Public', 'Private']",100.0%,"['Public', 'Private']",100.0%,"['Public', 'Private']",No,0

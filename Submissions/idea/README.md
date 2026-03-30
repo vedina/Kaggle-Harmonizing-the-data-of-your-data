@@ -46,20 +46,11 @@ Models used: `gpt-4o`, `gpt-4o-mini`, `claude-sonnet`.
 
 ---
 
-## Results
+## Models tested
 
-| Configuration | Kaggle F1 |
-|---|---|
-| Public notebook baseline | 0.270 |
-| Rules only | ~0.22 |
-| Rules + `gpt-4o-mini` | 0.260 |
-| Rules + `gpt-4o` | ~0.26 |
+Remote
 
-Scores reflect the public leaderboard (approximately half of test columns).
-The full evaluation includes all SDRF columns; ontology normalisation is
-expected to improve scores on `Characteristics[CleavageAgent]`,
-`Characteristics[Label]`, `Characteristics[Modification]`, and
-`Comment[Instrument]`.
+Local
 
 ---
 
@@ -81,30 +72,36 @@ and is declared as a git dependency.
 
 ## Installation & Usage
 
+We recommend using uv [instead](https://docs.astral.sh/uv/) and provide pyproject.toml
+
+```bash
+uv sync
+```
+
 ```bash
 pip install -r requirements.txt
 ```
 
 ```bash
 # 1. Extract SDRF per paper (run from the pipeline repo)
-python -m main_fill data/TestPubText/ --stage rules --rules-dir output/rules
-python -m main_fill data/TestPubText/ --stage llm \
+uv run -m main_fill data/TestPubText/ --stage rules --rules-dir output/rules
+uv run -m main_fill data/TestPubText/ --stage llm \
     --fill-from output/rules --llm-dir output/llm \
     --model gpt-4o --api-key $OPENAI_API_KEY
 
 # 2. Build submission
-python make_submission.py output/llm \
+uv run make_submission.py output/llm \
     --sample-submission data/SampleSubmission.csv \
     -o submission.csv
 
-# 3. (Optional) merge two model outputs
-python comparison.py \
+# 3. (Optional) merge (two or more) model outputs
+uv run comparison.py \
     --inputs output/llm_gpt4o/final.csv output/llm_claude/final.csv \
     --names gpt4o claude \
     --out_sdrf final_merged.sdrf.csv
 
 # 4. Local scoring (compare two submissions)
-python compare_scores.py \
+uv run compare_scores.py \
     --ours submission.csv \
     --compare other_submission.csv
 ```
@@ -123,7 +120,7 @@ python compare_scores.py \
 
 ## Checklist
 
-- [x] Code runs without errors
-- [x] Dependencies listed in `requirements.txt`
+- [x] Code runs without errors - you need t provide tokens for remote API services
+- [x] Dependencies listed in `requirements.txt` (uv recommended)
 - [x] README documents the approach
 - [x] Submission file is properly formatted

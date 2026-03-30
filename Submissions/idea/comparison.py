@@ -14,7 +14,8 @@ class SDRFMerger:
         self.hard_defaults = {
             r".*AlkylationReagent.*": "IAA",
             r".*ReductionReagent.*": "DTT",
-            r".*Enzyme.*": "NT=Trypsin;AC=MS:1001251"
+            r".*Enzyme.*": "NT=Trypsin;AC=MS:1001251",
+            r".*FractionIdentifier.*": "1",  # we should have this from rules ...
         }
 
         # 2. Strategy Mapping (First match wins)
