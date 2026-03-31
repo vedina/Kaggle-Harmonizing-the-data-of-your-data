@@ -1,0 +1,11 @@
+,models,path,type,report
+0,claude-sonnet-4-6,data\claude-sonnet-4-6\submission_claude_sonnet-4.6.R1.R2.csv,closed,"['consensus', 'holes']"
+1,gemma-3-4b,data\hdd2026\submission_gemma-3-4b-it_T0_R3_normalized\submission.csv,open,"['consensus', 'holes']"
+2,gpt-5.4,data\gpt-5.4\submission_gpt-5.4_R1.csv,closed,"['consensus', 'holes']"
+3,qwen3-4b,data\hdd2026\submission_qwen3-4b\submission_qwen3-4b_T0_R3_normalized.csv,open,"['consensus', 'holes']"
+4,deepseek-coder-v2-lite-instruct,data\hdd2026\submission_deepseek-coder-v2-lite-instruct_T0_R3_normalized\submission.csv,open,"['consensus', 'holes']"
+5,medgemma-4b-it,data\hdd2026\submission_medgemma-4b-it_T0_R3_normalized\submission.csv,open,"['consensus', 'holes']"
+6,nanbeige4.1-3b-q8,data\hdd2026\submission_nanbeige4.1-3b-q8_T0_R2_normalized\submission.csv,open,"['consensus', 'holes']"
+7,LocalAI-functioncall-llama3.2-3b-v0.5,data\hdd2026\submission_LocalAI-functioncall-llama3.2-3b-v0.5_T0_R3_normalized\submission.csv,open,"['consensus', 'holes']"
+8,gpt-o4-mini,data\gpt-o4-mini\submission_gpt-o4-mini.csv,closed,"['consensus', 'holes']"
+9,bggpt-gemma-3-27bgpt-o4-min-fp8,data\bggpt-gemma-3-27b-fp8\submission_bggpt-gemma-3-27b-fp8_R1.csv,open,"['consensus', 'holes']"

@@ -30,36 +30,78 @@ converts it into a JSON patch restricted to exactly the N/A attribute set.
 Rule-derived values cannot be overwritten. Paper text is trimmed to a
 configurable context budget with a 5% safety margin.
 
-Models used: `gpt-4o`, `gpt-4o-mini`, `claude-sonnet`.
 
-### Post-processing
+### Postprocessing
 
-- **Column alignment**: per-PXD CSVs are concatenated and columns are aligned
-  to the sample submission schema.
 - **Ontology normalisation** (`make_submission.py`): plain-text values are
   mapped to controlled vocabulary terms via the sdrf-pipelines OLS lookup
   (e.g. `Trypsin` → `AC=MS:1001251;NT=Trypsin`).
-- **Multi-model ensemble** (`comparison.py`): outputs from different models
+  
+### Aggregaiton
+
+
+- **Multi-model ensemble** (consensus: outputs from different models
+  are merged using per-column consensus strategies — majority vote for
+  categorical fields, union with deduplication for factor values, highest
+  value for numeric fields (replicates, tolerances).
+  
+- Consensus on all 10 LLMs  - public score 0.23
+claude-sonnet-4-6
+gemma-3-4b
+gpt-5.4
+qwen3-4b
+deepseek-coder-v2-lite-instruct
+medgemma-4b-it
+nanbeige4.1-3b-q8
+LocalAI-functioncall-llama3.2-3b-v0.5
+gpt-o4-mini
+bggpt-gemma-3-27bgpt-o4-min-fp8
+  
+ 
+- **Sequential Hole-Filling** (fill hole): outputs from different models
   are merged using per-column consensus strategies — majority vote for
   categorical fields, union with deduplication for factor values, highest
   value for numeric fields (replicates, tolerances).
 
+We submitted the sequential aggregation of the following sets:
+
+- all 10 LLMs - public score .287
+claude-sonnet-4-6
+gemma-3-4b
+gpt-5.4
+qwen3-4b
+deepseek-coder-v2-lite-instruct
+medgemma-4b-it
+nanbeige4.1-3b-q8
+LocalAI-functioncall-llama3.2-3b-v0.5
+gpt-o4-mini
+bggpt-gemma-3-27bgpt-o4-min-fp8
+
+- 7 open models  - public score .23
+gemma-3-4b
+gpt-5.4
+qwen3-4b
+deepseek-coder-v2-lite-instruct
+medgemma-4b-it
+nanbeige4.1-3b-q8
+LocalAI-functioncall-llama3.2-3b-v0.5
+
+- 4 models selected via fill stability / gain  - public score 0.285
+
+claude-sonnet-4-6
+gemma-3-4b
+qwen3-4b
+deepseek-coder-v2-lite-instruct
+
 ---
 
-## Models tested
-
-Remote
-
-Local
-
----
 
 ## Files
 
 | File | Description |
 |---|---|
 | `make_submission.py` | Combines per-PXD CSVs, aligns columns, applies OLS normalisation |
-| `comparison.py` | Merges and reconciles outputs from multiple models |
+| `comparison.py` | Merges and reconciles outputs from multiple models via consensus |
 | `compare_scores.py` | Local F1 scorer against training ground truth or another submission |
 | `requirements.txt` | Dependencies (includes `kaggle_sdrfmess` as git dependency) |
 | `submission.csv` | Final submission |
@@ -88,6 +130,8 @@ uv run -m main_fill data/TestPubText/ --stage rules --rules-dir output/rules
 uv run -m main_fill data/TestPubText/ --stage llm \
     --fill-from output/rules --llm-dir output/llm \
     --model gpt-4o --api-key $OPENAI_API_KEY
+	
+Works with any OpenAI compatible API  ( tested with LocalAI on Kaggle - notebooks provided)
 
 # 2. Build submission
 uv run make_submission.py output/llm \
@@ -110,17 +154,5 @@ uv run compare_scores.py \
 
 ## References
 
-- Deutsch EW et al. *A proteomics sample metadata representation for multiomics
-  integration and big data analysis.* Nature Communications, 2020.
-- [SDRF-Proteomics specification](https://github.com/bigbio/proteomics-sample-metadata)
 - [sdrf-pipelines](https://github.com/bigbio/sdrf-pipelines) — OLS ontology normalisation
-- [Competition metric](https://www.kaggle.com/code/iansitarik/sdrf-f1) — agglomerative clustering F1
 
----
-
-## Checklist
-
-- [x] Code runs without errors - you need t provide tokens for remote API services
-- [x] Dependencies listed in `requirements.txt` (uv recommended)
-- [x] README documents the approach
-- [x] Submission file is properly formatted

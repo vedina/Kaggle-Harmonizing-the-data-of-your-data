@@ -113,17 +113,27 @@ class SDRFMerger:
 
 def load_and_normalize(path: str) -> pd.DataFrame:
     df = pd.read_csv(path)
+    df.replace(r"\|", ";", regex=True,  inplace=True)
+    df.replace(';none', '',  inplace=True)
+    df.replace(';Not Applicable', '',  inplace=True)   
+    pattern = re.compile(r"^none$", re.I)
+    df = df.replace(pattern, "Not Applicable")
+    holes = (df.apply(lambda col: col.astype(str).str.lower() == "not applicable")).sum().sum()
+    print(f"{path} holes {holes}")
     # Convert 'not applicable' strings to real NaNs for logic processing
     na_patterns = re.compile(r"^(not applicable|n/a|none|nan)$", re.I)
-    return df.replace(na_patterns, np.nan)
+    df = df.replace(na_patterns, np.nan)
+    
+    return df
 
 def main():
     parser = argparse.ArgumentParser(description="Finalize SDRF with Defaults and Conflict Counts.")
     parser.add_argument("--inputs", nargs="+", required=True)
     parser.add_argument("--names", nargs="+")
-    parser.add_argument("--out_sdrf", default="final_merged.sdrf.csv")
+    parser.add_argument("--out_sdrf", default="final_consensus.sdrf.csv")
     parser.add_argument("--out_matrix", default="comparison_matrix.csv")
     parser.add_argument("--no_defaults", action="store_false", dest="apply_defaults")
+    parser.add_argument("--out_merge", default="final_merged.sdrf.csv")
 
     args = parser.parse_args()
     model_names = args.names if args.names else [Path(p).stem for p in args.inputs]
@@ -134,6 +144,8 @@ def main():
     
     # Save the merged SDRF
     final_sdrf.to_csv(args.out_sdrf, index=False)
+
+    holes = final_sdrf.map(lambda x: str(x).strip().lower() == "not applicable").values.sum()    
 
     # Comparison Matrix Logic
     report_rows = []
@@ -155,8 +167,10 @@ def main():
         
         report_rows.append(row_stats)
     
-    pd.DataFrame(report_rows).to_csv(args.out_matrix, index=False)
-    print(f"✅ Final SDRF: {args.out_sdrf}\n📊 Comparison: {args.out_matrix}")
+    df = pd.DataFrame(report_rows)
+    df.to_csv(args.out_matrix, index=False)
+
+    print(f"✅ Final SDRF: {args.out_sdrf}\n📊 Comparison: {args.out_matrix} Holes {holes}")
 
 if __name__ == "__main__":
     main()

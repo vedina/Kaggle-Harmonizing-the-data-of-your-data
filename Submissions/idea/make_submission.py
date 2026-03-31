@@ -5,6 +5,7 @@ from pathlib import Path
 import pandas as pd
 import logging
 import sys
+import re
 from sdrf_pipelines.ols.ols import OLS_AVAILABLE
 
 from cv_map import build_cv_normaliser, normalise_submission
@@ -34,11 +35,10 @@ def combine(sdrf_folder: Path = None,
 
     # --- iterate SDRF CSVs ---
     all_dfs = []
-    # we want them same order as in the sample submission
     for pxd in pxds:
-        # Extract PXD from filename
         f = sdrf_folder / f"{pxd}_PubText.sdrf.csv"
         df = pd.read_csv(f)
+        df = df.replace(r"\|", ";", regex=True)
         try:
             df["PXD"] = pxd
             all_dfs.append(df)
@@ -62,6 +62,11 @@ def combine(sdrf_folder: Path = None,
     # no idea, but this is in SampleSubmission
     combined_df['Usage'] = ['Public' if i % 2 == 0 else 'Private' for i in range(len(combined_df))]
     combined_df = combined_df.replace('not applicable', 'Not Applicable')
+    combined_df = combined_df.replace(';none', '')
+    combined_df = combined_df.replace(';Not Applicable', '')
+    pattern = re.compile(r"^none$", re.I)
+    df = df.replace(pattern, "Not Applicable")    
+    combined_df = df.applymap(lambda x: "Not Applicable" if str(x).strip().lower() == "none" else x)
     sanity_check(combined_df)
     
     # ---  save final combined CSV ---
