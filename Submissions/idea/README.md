@@ -4,6 +4,14 @@
 **Task:** Extract structured SDRF metadata from proteomics paper text for 15 datasets.  
 **Metric:** Macro-averaged F1 over agglomerative-clustered values per (PXD, column) pair.
 
+> **Generality note:** although built for proteomics SDRF, the pipeline is
+> domain-agnostic. The field registry (`fields.py`), prompts (`prompts.py`),
+> and Pydantic output model (`models.py`) are the only files that encode
+> domain knowledge. Replacing those three files is sufficient to repurpose
+> the pipeline for any structured metadata extraction task or any schema 
+> where a mix of rule-extractable and LLM-inferable fields
+> must be populated from free-text sources.
+
 ---
 
 ## Method
